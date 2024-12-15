@@ -2,10 +2,11 @@ package dat
 
 import (
 	"fmt"
-	"github.com/v2rayA/v2rayA/core/v2ray/asset"
-	"github.com/v2rayA/v2rayA/pkg/util/log"
 	"os"
 	"strings"
+
+	"github.com/v2rayA/v2rayA/core/v2ray/asset"
+	"github.com/v2rayA/v2rayA/pkg/util/log"
 )
 
 func UpdateLocalGeoIP() (err error) {
@@ -13,11 +14,11 @@ func UpdateLocalGeoIP() (err error) {
 	if err != nil {
 		return err
 	}
-	if err = asset.Download("https://github.com/v2fly/geoip/releases/latest/download/geoip.dat", pathSiteDat+".new"); err != nil {
+	if err = asset.Download("https://ghp.ci/https://github.com/v2fly/geoip/releases/latest/download/geoip.dat", pathSiteDat+".new"); err != nil {
 		log.Warn("UpdateLocalGeoIP: %v", err)
 		return
 	}
-	siteDatSha256, err := httpGet("https://github.com/v2fly/geoip/releases/latest/download/geoip.dat.sha256sum")
+	siteDatSha256, err := httpGet("https://ghp.ci/https://github.com/v2fly/geoip/releases/latest/download/geoip.dat.sha256sum")
 	if err != nil {
 		err = fmt.Errorf("%w: %v", FailCheckSha, err)
 		log.Warn("UpdateLocalGeoIP: %v", err)

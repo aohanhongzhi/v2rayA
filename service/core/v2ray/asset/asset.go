@@ -83,6 +83,7 @@ func GetV2rayLocationAsset(filename string) (string, error) {
 			// symlink all assets into XDG_RUNTIME_DIR
 			relpath := filepath.Join(folder, filename)
 			fullpath, err := xdg.SearchDataFile(relpath)
+			log.Info("V2RAY_LOCATION_ASSET: %v", fullpath)
 			if err != nil {
 				fullpath, err = xdg.DataFile(relpath)
 				if err != nil {

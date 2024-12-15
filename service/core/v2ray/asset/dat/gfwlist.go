@@ -108,12 +108,12 @@ func UpdateLocalGFWList() (localGFWListVersionAfterUpdate string, err error) {
 	if err != nil {
 		return "", err
 	}
-	u := fmt.Sprintf(`https://github.com/v2rayA/dist-v2ray-rules-dat/raw/%v/geosite.dat`, gfwlist.Tag)
+	u := fmt.Sprintf(`https://ghp.ci/https://github.com/v2rayA/dist-v2ray-rules-dat/raw/%v/geosite.dat`, gfwlist.Tag)
 	if err = asset.Download(u, pathSiteDat+".new"); err != nil {
 		log.Warn("UpdateLocalGFWList: %v", err)
 		return
 	}
-	u2 := fmt.Sprintf(`https://github.com/v2rayA/dist-v2ray-rules-dat/raw/%v/geosite.dat.sha256sum`, gfwlist.Tag)
+	u2 := fmt.Sprintf(`https://ghp.ci/https://github.com/v2rayA/dist-v2ray-rules-dat/raw/%v/geosite.dat.sha256sum`, gfwlist.Tag)
 	siteDatSha256, err := httpGet(u2)
 	if err != nil {
 		err = fmt.Errorf("%w: %v", FailCheckSha, err)
