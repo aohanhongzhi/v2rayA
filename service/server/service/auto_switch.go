@@ -105,14 +105,16 @@ func switchToReachableServer() error {
 	}
 
 	log.Info("[AutoSwitch] testing %d candidate servers", len(candidates))
-	tested, err := TestHttpLatency(candidates, autoSwitchProbeTimeout, 16, false, "")
+	tested, err := TestHttpLatency(candidates, autoSwitchProbeTimeout, 16, false, autoSwitchTestURL)
 	if err != nil {
 		return fmt.Errorf("test candidate servers: %w", err)
 	}
+	available := 0
 	for _, candidate := range tested {
 		if !latencyAvailable(candidate.Latency) {
 			continue
 		}
+		available++
 		isCurrent := false
 		if backup != nil {
 			for _, old := range backup.Get() {
@@ -137,6 +139,7 @@ func switchToReachableServer() error {
 		}
 		log.Warn("[AutoSwitch] switched server cannot reach %s, trying next", autoSwitchTestURL)
 	}
+	log.Info("[AutoSwitch] %d candidate servers can reach %s", available, autoSwitchTestURL)
 	if backup != nil {
 		_ = configure.OverwriteConnects(backup)
 		_ = v2ray.UpdateV2RayConfig()
